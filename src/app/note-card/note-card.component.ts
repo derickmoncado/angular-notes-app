@@ -1,15 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Renderer2,
+} from '@angular/core';
 
 @Component({
   selector: 'app-note-card',
   templateUrl: './note-card.component.html',
-  styleUrls: ['./note-card.component.scss']
+  styleUrls: ['./note-card.component.scss'],
 })
 export class NoteCardComponent implements OnInit {
+  constructor(private renderer: Renderer2) {}
 
-  constructor() { }
+  // Properties
+  @ViewChild('truncator') truncator: ElementRef<HTMLElement> | undefined;
+  @ViewChild('bodyText') bodyText: ElementRef<HTMLElement> | undefined;
 
   ngOnInit(): void {
-  }
+    // work out if there is a text overflow, and if not, then hide the truncator
+    const style = window.getComputedStyle(this.bodyText.nativeElement, null);
+    const viewableHeight = parseInt(style.getPropertyValue('height'), 10);
 
+    if (this.bodyText.nativeElement.scrollHeight > viewableHeight) {
+      // if there is a text overflow, show the fade out truncator
+      this.renderer.setStyle(this.truncator.nativeElement, 'display', 'block');
+    } else {
+      // else (there is not text overflow), hide the fade out truncator
+      this.renderer.setStyle(this.truncator.nativeElement, 'display', 'none');
+    }
+  }
 }

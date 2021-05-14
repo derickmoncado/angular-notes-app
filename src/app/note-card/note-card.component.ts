@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef,
   Renderer2,
+  AfterViewInit,
 } from '@angular/core';
 
 @Component({
@@ -11,14 +12,14 @@ import {
   templateUrl: './note-card.component.html',
   styleUrls: ['./note-card.component.scss'],
 })
-export class NoteCardComponent implements OnInit {
+export class NoteCardComponent implements OnInit, AfterViewInit {
   constructor(private renderer: Renderer2) {}
 
   // Properties
-  @ViewChild('truncator') truncator: ElementRef<HTMLElement> | undefined;
-  @ViewChild('bodyText') bodyText: ElementRef<HTMLElement> | undefined;
+  @ViewChild('truncator') truncator!: ElementRef<HTMLElement>;
+  @ViewChild('bodyText') bodyText!: ElementRef<HTMLElement>;
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     // work out if there is a text overflow, and if not, then hide the truncator
     const style = window.getComputedStyle(this.bodyText.nativeElement, null);
     const viewableHeight = parseInt(style.getPropertyValue('height'), 10);
@@ -31,4 +32,6 @@ export class NoteCardComponent implements OnInit {
       this.renderer.setStyle(this.truncator.nativeElement, 'display', 'none');
     }
   }
+
+  ngOnInit(): void {}
 }

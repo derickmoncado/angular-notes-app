@@ -5,6 +5,7 @@ import {
   ElementRef,
   Renderer2,
   AfterViewInit,
+  Input,
 } from '@angular/core';
 
 @Component({
@@ -16,6 +17,9 @@ export class NoteCardComponent implements OnInit, AfterViewInit {
   constructor(private renderer: Renderer2) {}
 
   // Properties
+  @Input() title: string | undefined;
+  @Input() body: string | undefined;
+
   @ViewChild('truncator') truncator!: ElementRef<HTMLElement>;
   @ViewChild('bodyText') bodyText!: ElementRef<HTMLElement>;
 
@@ -25,10 +29,10 @@ export class NoteCardComponent implements OnInit, AfterViewInit {
     const viewableHeight = parseInt(style.getPropertyValue('height'), 10);
 
     if (this.bodyText.nativeElement.scrollHeight > viewableHeight) {
-      // if there is a text overflow, show the fade out truncator
+      // if there is a text overflow, SHOW the fade out truncator
       this.renderer.setStyle(this.truncator.nativeElement, 'display', 'block');
     } else {
-      // else (there is not text overflow), hide the fade out truncator
+      // else (there is not text overflow), HIDE the fade out truncator
       this.renderer.setStyle(this.truncator.nativeElement, 'display', 'none');
     }
   }

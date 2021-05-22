@@ -1,9 +1,15 @@
 <div class="form-container">
-  <form #noteForm="ngForm">
+  <form #noteForm="ngForm" (ngSubmit)="onSubmit(noteForm)">
     <div class="field">
       <label class="label">Title</label>
       <div class="control">
-        <input type="text" class="input" />
+        <input
+          type="text"
+          class="input"
+          name="title"
+          [ngModel]="note.title"
+          required
+        />
       </div>
     </div>
 
@@ -12,7 +18,7 @@
     <div class="field">
       <label class="label">Body</label>
       <div class="control">
-        <textarea class="textarea"></textarea>
+        <textarea class="textarea" name="body" [ngModel]="note.body"></textarea>
       </div>
     </div>
 
@@ -21,7 +27,13 @@
         <button type="button" class="button is-text">Cancel</button>
       </div>
       <div class="control">
-        <button type="submit" class="button is-success">Save</button>
+        <button
+          type="submit"
+          class="button is-success"
+          [disabled]="!noteForm.valid"
+        >
+          Save
+        </button>
       </div>
     </div>
   </form>

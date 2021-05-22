@@ -21,6 +21,10 @@ export class NoteDetailsComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+  cancel(): void {
+    this.router.navigateByUrl('/');
+  }
+
   ngOnInit(): void {
     this.note = new Note();
   }

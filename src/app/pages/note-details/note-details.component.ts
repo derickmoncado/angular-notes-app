@@ -15,7 +15,7 @@ export class NoteDetailsComponent implements OnInit {
 
   // On noteForm submit
   onSubmit(form: NgForm): void {
-    console.log(form);
+    // Save the note...
   }
 
   ngOnInit(): void {

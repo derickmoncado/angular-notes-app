@@ -10,6 +10,10 @@ export class NotesService {
 
   constructor() {}
 
+  getAll(): any {
+    return this.notes;
+  }
+
   get(id: number): any {
     return this.notes[id];
   }
